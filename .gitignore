@@ -4,7 +4,7 @@ install/
 build/
 bin/
 lib/
-src
+src/xarm_ros2/
 msg_gen/
 srv_gen/
 msg/*Action.msg
