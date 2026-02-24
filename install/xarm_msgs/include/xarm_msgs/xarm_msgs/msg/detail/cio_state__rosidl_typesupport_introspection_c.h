@@ -1,1 +1,0 @@
-/home/oscar/Projects/Academic/dev_ws/build/xarm_msgs/rosidl_typesupport_introspection_c/xarm_msgs/msg/detail/cio_state__rosidl_typesupport_introspection_c.h

@@ -1,1 +1,0 @@
-/home/oscar/Projects/Academic/dev_ws/src/xarm_ros2/xarm_api/launch/_robot_driver.launch.py

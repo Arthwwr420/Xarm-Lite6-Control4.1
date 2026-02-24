@@ -1,1 +1,0 @@
-/home/oscar/Projects/Academic/dev_ws/build/xarm_msgs/rosidl_generator_c/xarm_msgs/msg/detail/move_velocity__struct.h

@@ -1,1 +1,0 @@
-/home/oscar/Projects/Academic/dev_ws/src/xarm_ros2/xarm_gazebo/launch/_dual_robot_beside_table_gazebo.launch.py

@@ -1,1 +1,0 @@
-/home/oscar/Projects/Academic/dev_ws/build/xarm_moveit_config/ament_cmake_environment_hooks/local_setup.bash

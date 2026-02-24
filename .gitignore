@@ -1,8 +1,10 @@
 devel/
-logs/
+log/
+install/
 build/
 bin/
 lib/
+src/xarm_ros2/
 msg_gen/
 srv_gen/
 msg/*Action.msg

@@ -1,1 +1,0 @@
-/home/oscar/Projects/Academic/dev_ws/src/xarm_ros2/xarm_vision/d435i_xarm_setup/launch/d435i_findobj2d_robot_api.launch.py

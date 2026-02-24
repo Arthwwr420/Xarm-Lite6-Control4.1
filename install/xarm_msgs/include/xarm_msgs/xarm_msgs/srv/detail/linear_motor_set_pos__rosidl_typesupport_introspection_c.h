@@ -1,1 +1,0 @@
-/home/oscar/Projects/Academic/dev_ws/build/xarm_msgs/rosidl_typesupport_introspection_c/xarm_msgs/srv/detail/linear_motor_set_pos__rosidl_typesupport_introspection_c.h

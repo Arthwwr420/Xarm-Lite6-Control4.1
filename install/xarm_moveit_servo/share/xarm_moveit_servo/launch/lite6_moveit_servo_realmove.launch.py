@@ -1,1 +1,0 @@
-/home/oscar/Projects/Academic/dev_ws/src/xarm_ros2/xarm_moveit_servo/launch/lite6_moveit_servo_realmove.launch.py

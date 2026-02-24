@@ -1,1 +1,0 @@
-/home/oscar/Projects/Academic/dev_ws/src/xarm_ros2/xarm_sdk/cxx/include/xarm/core/instruction/uxbus_cmd_ser.h

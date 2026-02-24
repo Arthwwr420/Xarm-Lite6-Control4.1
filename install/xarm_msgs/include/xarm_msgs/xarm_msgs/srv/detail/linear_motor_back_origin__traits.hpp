@@ -1,1 +1,0 @@
-/home/oscar/Projects/Academic/dev_ws/build/xarm_msgs/rosidl_generator_cpp/xarm_msgs/srv/detail/linear_motor_back_origin__traits.hpp

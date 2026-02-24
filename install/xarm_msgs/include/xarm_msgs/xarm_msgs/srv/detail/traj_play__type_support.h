@@ -1,1 +1,0 @@
-/home/oscar/Projects/Academic/dev_ws/build/xarm_msgs/rosidl_generator_c/xarm_msgs/srv/detail/traj_play__type_support.h

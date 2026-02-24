@@ -1,1 +1,0 @@
-/home/oscar/Projects/Academic/dev_ws/src/xarm_ros2/thirdparty/realsense_gazebo_plugin/include/realsense_gazebo_plugin/gazebo_ros_realsense.h

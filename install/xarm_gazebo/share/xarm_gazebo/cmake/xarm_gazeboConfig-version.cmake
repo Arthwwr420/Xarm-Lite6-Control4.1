@@ -1,1 +1,0 @@
-/home/oscar/Projects/Academic/dev_ws/build/xarm_gazebo/ament_cmake_core/xarm_gazeboConfig-version.cmake
