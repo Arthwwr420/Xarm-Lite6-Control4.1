@@ -6,16 +6,18 @@ import numpy as np
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import TwistStamped
+from control_msgs.msg import JointJog
 
 from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy, HistoryPolicy
 
+# Perturbation generator:  Send to Joints instead of cartesian
 
 class PerturbationGenerator(Node):
     def __init__(self):
-        super().__init__("xarm_perturbation_injector")
+        super().__init__("xarm_joint_perturbation_injector")
 
         self.output_topic = self.declare_parameter(
-            "output_topic", "/servo_server/delta_twist_cmds"
+            "output_topic", "/servo_server/delta_joint_cmds"
         ).value
 
         self.enabled = bool(self.declare_parameter("enabled", True).value)
@@ -33,11 +35,11 @@ class PerturbationGenerator(Node):
         self.noise_std_linear = float(self.declare_parameter("noise_std_linear", 0.01).value)
 
         # Optional DC bias (mean command)
-        base = self.declare_parameter("base_linear", [0.0, 0.0, 0.0]).value
+        base = self.declare_parameter("base_linear", [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]).value
         try:
-            self.base_linear = np.array([float(base[0]), float(base[1]), float(base[2])], dtype=float)
+            self.base_linear = np.array([float(base[0]), float(base[1]), float(base[2])],float(base[3]),float(base[4]),float(base[5]), dtype=float)
         except Exception:
-            self.base_linear = np.zeros(3, dtype=float)
+            self.base_linear = np.zeros(6, dtype=float)
 
         # Debug
         self.debug = bool(self.declare_parameter("debug", True).value)
@@ -55,7 +57,7 @@ class PerturbationGenerator(Node):
             reliability=reliability,
             durability=DurabilityPolicy.VOLATILE,
         )
-        self.pub = self.create_publisher(TwistStamped, self.output_topic, self.pub_qos)
+        self.pub = self.create_publisher(JointJog, self.output_topic, self.pub_qos)
 
         self.t0 = time.time()
         self.rng = np.random.default_rng(7)
@@ -71,17 +73,15 @@ class PerturbationGenerator(Node):
 
     def _dp(self):
         if self.mode == "off":
-            return np.zeros(3, dtype=float)
+            return np.zeros(6, dtype=float)
 
         if self.mode == "gaussian":
-            return self.rng.normal(0.0, self.noise_std_linear, size=3)
+            return self.rng.normal(0.0, self.noise_std_linear, size=6)
 
         # sine default
         s = math.sin(2.0 * math.pi * self.sine_freq_hz * (time.time() - self.t0))
         amp = self.sine_amp_linear * s
-        dp = np.zeros(3, dtype=float)
-        axis = {"x": 0, "y": 1, "z": 2}.get(self.sine_axis, 0)
-        dp[axis] = amp
+        dp = np.array([amp,amp,amp,amp,amp,amp])
         return dp
 
     def tick(self):
@@ -93,24 +93,26 @@ class PerturbationGenerator(Node):
         v = np.clip(self.base_linear + self._dp(), -self.max_lin, self.max_lin)
         self._publish(v, note="RUN")
 
-    def _publish(self, v_xyz: np.ndarray, note=""):
-        out = TwistStamped()
-        out.header.stamp = self.get_clock().now().to_msg()
-        out.header.frame_id = "link_base"
-        out.twist.linear.x = float(v_xyz[0])
-        out.twist.linear.y = float(v_xyz[1])
-        out.twist.linear.z = float(v_xyz[2])
-        out.twist.angular.x = 0.0
-        out.twist.angular.y = 0.0
-        out.twist.angular.z = 0.0
+    def _publish(self, v_q: np.ndarray, note=""):
+        cmd = JointJog()
+        cmd.header.stamp = self.get_clock().now().to_msg()
+        cmd.header.frame_id = "link_base"
+        cmd.joint_names = [ "joint1",
+                            "joint2",
+                            "joint3",
+                            "joint4",
+                            "joint5",
+                            "joint6",
+                           ]
 
-        self.pub.publish(out)
+        cmd.velocities = [v_q[0],v_q[1],v_q[2],v_q[3],v_q[4],v_q[5]]
+        self.pub.publish(cmd)
         self._out_count += 1
 
         if self.debug:
             now = time.time()
             if now - self._last_dbg_wall >= self.debug_period_s:
-                self.get_logger().info(f"[dbg] out={self._out_count} {note} v={np.round(v_xyz,3)}")
+                self.get_logger().info(f"[dbg] out={self._out_count} {note} v={np.round(v_q,3)}")
                 self._last_dbg_wall = now
 
 
