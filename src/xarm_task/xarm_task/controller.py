@@ -38,7 +38,7 @@ class Controller(Node):
     def __init__(self):
         super().__init__('controller')
 
-        self.ctrl_type = str(self.declare_parameter('controller_type', 'PID').value).upper()
+        self.ctrl_type = str(self.declare_parameter('controller_type', 'CTC').value).upper()
         self.loop_traj = bool(self.declare_parameter('loop_trajectory', True).value)
 
         self.rate_hz = float(self.declare_parameter('rate_hz', 200.0).value)
