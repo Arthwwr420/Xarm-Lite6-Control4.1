@@ -1,12 +1,62 @@
-Se hace uso de un launch para correr el codigo de perturbaciones y los de nuestro controllador, dependiendo de los argumentos es que podemos elegir entre CTC, PID y si queremos perturbaciones gausianas o senoidales
-Comandos:
--ros2 launch xarm_task Custom_launch.py controller_type:=CTC perturbation_mode:=sine
--ros2 launch xarm_task Custom_launch.py controller_type:=CTC perturbation_mode:=gaussian
--ros2 launch xarm_task Custom_launch.py controller_type:=PID perturbation_mode:=sine
--ros2 launch xarm_task Custom_launch.py controller_type:=PID perturbation_mode:=gaussian
+# Xarm Lite6 Control 4.1
 
-Si se quiere correr sin ninguna perturbaciones es el siguiente comando:
--ros2 run xarm_task controller
-El comando anterior por defecto solo usa CTC, para poner PID sin perturbaciones, en el codigo de controller.py modifica la linea 41 'CTC' y la remplazas por 'PID'
+Repositorio para control y experimentación con el robot **xArm Lite6** usando **ROS2**.
 
-Comando para generar graficas despues de haber realizado las trayectorias: python3 Results/make_plots.py
+Este proyecto permite ejecutar controladores **CTC** y **PID** y aplicar perturbaciones **senoidales** o **gaussianas** durante la ejecución de trayectorias.
+
+---
+
+# Requisitos
+
+- Ubuntu 22.04
+- ROS2 Humble
+- Python 3
+- xArm Lite6 driver
+
+---
+
+# Estructura del repositorio
+Results/ → resultados y datos de experimentos
+src/xarm_task/ → controlador principal del robot
+src/xarm_perturbations/ → nodo para generar perturbaciones
+
+---
+
+# Ejecutar el sistema
+
+El launch permite elegir:
+
+- tipo de controlador
+- tipo de perturbación
+
+## CTC con perturbación senoidal
+ros2 launch xarm_task Custom_launch.py controller_type:=CTC perturbation_mode:=sine
+
+## CTC con perturbación gaussiana
+ros2 launch xarm_task Custom_launch.py controller_type:=CTC perturbation_mode:=gaussian
+## PID con perturbación senoidal
+ros2 launch xarm_task Custom_launch.py controller_type:=PID perturbation_mode:=sine
+## PID con perturbación gaussiana
+ros2 launch xarm_task Custom_launch.py controller_type:=PID perturbation_mode:=gaussian
+
+---
+
+# Ejecutar sin perturbaciones
+ros2 run xarm_task controller
+
+Por defecto el código utiliza **CTC**.
+
+Si se desea usar **PID sin perturbaciones**, modificar en:
+src/xarm_task/xarm_task/controller.py
+
+cambiando:
+'CTC' por 'PID'
+
+---
+
+# Generar gráficas
+
+Después de ejecutar las trayectorias, se pueden generar las gráficas con:
+python3 Results/make_plots.py
+
+---
