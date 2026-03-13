@@ -6,6 +6,12 @@ Este proyecto permite ejecutar controladores **CTC** y **PID** y aplicar perturb
 
 ---
 
+## MIEMBROS
+- Arturo Balboa
+- Oscar de la Rosa
+- Emiliano Niño
+- Rigoberto Soto
+
 # Requisitos
 
 - Ubuntu 22.04
